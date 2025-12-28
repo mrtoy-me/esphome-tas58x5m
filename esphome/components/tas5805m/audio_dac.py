@@ -1,6 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import i2c, tas58x5m_dac
+from esphome.components import i2c
+from esphome.components.tas58_common import Tas58Component
 from esphome.components.audio_dac import AudioDac
 from esphome import pins
 
@@ -22,7 +23,7 @@ CONF_VOLUME_MAX = "volume_max"
 CONF_TAS5805M_ID = "tas5805m_id"
 
 tas5805m_ns = cg.esphome_ns.namespace("tas5805m")
-Tas5805mComponent = tas5805m_ns.class_("Tas5805mComponent", AudioDac, cg.PollingComponent, tas58x5m_dac.Tas58x5mDac)
+Tas5805mComponent = tas5805m_ns.class_("Tas5805mComponent", AudioDac, cg.PollingComponent, Tas58Component)
 
 AutoRefreshMode = tas5805m_ns.enum("AutoRefreshMode")
 AUTO_REFRESH_MODES = {
