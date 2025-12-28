@@ -3,7 +3,7 @@
 #include "esphome/core/helpers.h"
 #include "esphome/core/hal.h"
 
-namespace esphome::tas58common {
+namespace esphome::tas58_common {
 
 bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
   uint8_t current;
