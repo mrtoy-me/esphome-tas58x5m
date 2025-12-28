@@ -10,6 +10,7 @@ from esphome.const import (
     CONF_ENABLE_PIN,
 )
 
+AUTO_LOAD = ["tas58_common"]
 CODEOWNERS = ["@mrtoy-me"]
 DEPENDENCIES = ["i2c"]
 
