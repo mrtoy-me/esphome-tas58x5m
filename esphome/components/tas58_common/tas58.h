@@ -2,7 +2,7 @@
 
 #include "esphome/components/i2c/i2c.h"
 
-namespace esphome::tas58x5m_dac {
+namespace esphome::tas58_common {
 
 enum ControlState : uint8_t {
     CTRL_DEEP_SLEEP = 0x00, // Deep Sleep
@@ -65,7 +65,7 @@ static const uint32_t TAS58_MIXER_VALUE_MINUS6DB    = 0x00004000;
 static const uint8_t TAS58_MUTE_MASK                = 0x08;  // LR Channel Mute
 static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain top 3 reserved bits of AGAIN register
 
-class Tas58x5mDac : public i2c::I2CDevice {
+class Tas58Component : public i2c::I2CDevice {
  public:
 
    bool get_analog_gain_(uint8_t* raw_gain);
