@@ -3,7 +3,7 @@
 #include "esphome/components/number/number.h"
 #include "esphome/core/component.h"
 #include "esphome/core/preferences.h"
-#include "../tas5805m.h"
+#include "esphome/components/tas5805m/tas5805m.h"
 
 namespace esphome::tas5805m {
 
