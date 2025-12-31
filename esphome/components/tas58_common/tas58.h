@@ -2,7 +2,7 @@
 
 #include "esphome/components/i2c/i2c.h"
 
-namespace esphome::tas58_common {
+namespace esphome::tas58x5m_dac {
 
 enum ControlState : uint8_t {
     CTRL_DEEP_SLEEP = 0x00, // Deep Sleep
@@ -25,6 +25,7 @@ enum MixerMode : uint8_t {
 };
 
 static const char* const MIXER_MODE_TEXT[] = {"STEREO", "STEREO_INVERSE", "MONO", "RIGHT", "LEFT"};
+
 static const float TAS58_MIN_ANALOG_GAIN            = -15.5;
 static const float TAS58_MAX_ANALOG_GAIN            = 0.0;
 
@@ -67,6 +68,9 @@ static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain t
 
 class Tas58Component : public i2c::I2CDevice {
  public:
+   void config_analog_gain(float analog_gain) { this->tas58_analog_gain_ = analog_gain; }
+   void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
+   void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }
 
    bool get_analog_gain_(uint8_t* raw_gain);
    bool set_analog_gain_(float gain_db);

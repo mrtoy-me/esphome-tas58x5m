@@ -5,7 +5,7 @@
 #include "esphome/components/i2c/i2c.h"
 #include "esphome/core/hal.h"
 
-#include "esphome/components/tas58_common/tas58.h"
+#include "esphome/components/tas58x5m_dac/tas58.h"
 #include "tas5805m_cfg.h"
 
 #ifdef USE_TAS5805M_EQ
@@ -43,15 +43,9 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
 
   // optional YAML config
 
-  void config_analog_gain(float analog_gain) { this->tas58_analog_gain_ = analog_gain; }
-
-  void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
-
   void config_ignore_fault_mode(ExcludeIgnoreMode ignore_fault_mode) {
     this->ignore_clock_faults_when_clearing_faults_ = (ignore_fault_mode == ExcludeIgnoreMode::CLOCK_FAULT);
   }
-
-  void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }
 
   void config_refresh_eq(AutoRefreshMode auto_refresh) { this->auto_refresh_ = auto_refresh; }
 
