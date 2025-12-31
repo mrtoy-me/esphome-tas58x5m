@@ -44,7 +44,7 @@ def validate_config(config):
     return config
 
 CONFIG_SCHEMA = cv.All(
-      (
+      cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(Tas5805mComponent),
             cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
@@ -64,9 +64,9 @@ CONFIG_SCHEMA = cv.All(
             ),
         }
     )
-    .extend tas58x5m_dac.BASE_SCHEMA
+    .extend(tas58x5m_dac.BASE_SCHEMA)
     .extend(cv.polling_component_schema("1s"))
-    .extend(i2c.i2c_device_schema(0x2D))
+,   .extend(i2c.i2c_device_schema(0x2D))
     .add_extra(validate_config),
     cv.only_with_esp_idf,
     cv.only_on_esp32,
