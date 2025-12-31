@@ -5,7 +5,7 @@ from esphome.components import tas58x5m_dac
 from esphome.components.audio_dac import AudioDac
 from esphome import pins
 
-DEPENDENCIES = tas58x5m_dac.DEPENDENCIES
+# DEPENDENCIES = tas58x5m_dac.DEPENDENCIES
 
 AUTO_LOAD = ["tas58x5m_dac"]
 
