@@ -49,7 +49,8 @@ BASE_SCHEMA = (
             ),
         }
   )
-  .add_extra(validate_config),
+  .add_extra(validate_config)
+  .extend(i2c.i2c_device_schema(0x2D)),
   cv.only_with_esp_idf,
   cv.only_on_esp32,
 )
