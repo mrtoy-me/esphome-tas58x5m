@@ -62,7 +62,7 @@ CONFIG_SCHEMA = cv.All(
                         cv.decibel, cv.int_range(-103, 24)
             ),
         }
-    )
+    ),
     validate_config,
 )
 
