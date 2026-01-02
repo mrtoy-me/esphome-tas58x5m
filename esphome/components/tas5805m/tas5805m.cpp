@@ -163,7 +163,7 @@ void Tas5805mComponent::update() {
     if(!this->update_delay_finished_) return;
 
     // finished delay so clear faults
-    if (!this->tas5_write_byte_(TAS5805M_FAULT_CLEAR, TAS5805M_ANALOG_FAULT_CLEAR)) {
+    if (!this->tas58_write_byte_(TAS5805M_FAULT_CLEAR, TAS5805M_ANALOG_FAULT_CLEAR)) {
       ESP_LOGW(TAG, "%sinitialising faults", ERROR);
     }
 

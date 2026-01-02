@@ -230,7 +230,7 @@ bool Tas58Component::clear_fault_registers_() {
 // low level functions
 
 bool Tas58Component::set_book_and_page_(uint8_t book, uint8_t page) {
-  if (!this->tas58_write_byte_(TAS58_REG_PAGE_SET, TAS5805M_REG_PAGE_ZERO)) {
+  if (!this->tas58_write_byte_(TAS58_REG_PAGE_SET, TAS58_REG_PAGE_ZERO)) {
     ESP_LOGE(TAG, "%s page 0", ERROR);
     return false;
   }

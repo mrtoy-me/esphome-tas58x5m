@@ -93,7 +93,7 @@ class Tas58Component : public i2c::I2CDevice {
    bool set_state_(ControlState state);
 
    bool clear_fault_registers_();
-   
+
    // low level functions
    bool set_book_and_page_(uint8_t book, uint8_t page);
 

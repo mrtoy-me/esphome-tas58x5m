@@ -2,28 +2,6 @@
 
 namespace esphome::tas5805m {
 
-  enum ControlState : uint8_t {
-    CTRL_DEEP_SLEEP = 0x00, // Deep Sleep
-    CTRL_SLEEP      = 0x01, // Sleep
-    CTRL_HI_Z       = 0x02, // Hi-Z
-    CTRL_PLAY       = 0x03, // Play
-   };
-
-  enum DacMode : uint8_t {
-    BTL  = 0, // Bridge tied load
-    PBTL = 1, // Parallel load
-  };
-
-  enum MixerMode : uint8_t {
-    STEREO = 0,
-    STEREO_INVERSE,
-    MONO,
-    RIGHT,
-    LEFT,
-  };
-
-  static const char* const MIXER_MODE_TEXT[] = {"STEREO", "STEREO_INVERSE", "MONO", "RIGHT", "LEFT"};
-
   struct Tas5805mConfiguration {
     uint8_t offset;
     uint8_t value;
