@@ -23,7 +23,7 @@ CONF_VOLUME_MAX = "volume_max"
 CONF_TAS5805M_ID = "tas5805m_id"
 
 tas5805m_ns = cg.esphome_ns.namespace("tas5805m")
-Tas5805mComponent = tas5805m_ns.class_("Tas5805mComponent", AudioDac, cg.PollingComponent, tas58x5m_dac.Tas58Component)
+Tas5805mComponent = tas5805m_ns.class_("Tas5805mComponent", AudioDac, tas58x5m_dac.Tas58Component)
 
 AutoRefreshMode = tas5805m_ns.enum("AutoRefreshMode")
 AUTO_REFRESH_MODES = {
@@ -42,8 +42,8 @@ def validate_config(config):
         raise cv.Invalid("volume_max must at least 9db greater than volume_min")
     return config
 
-CONFIG_SCHEMA = (
-    cv.Schema(
+CONFIG_SCHEMA = cv.All(
+    tas58x5m_dac.BASE_SCHEMA.extend(
         {
             cv.GenerateID(): cv.declare_id(Tas5805mComponent),
             cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
@@ -63,8 +63,7 @@ CONFIG_SCHEMA = (
             ),
         }
     )
-    .extend(tas58x5m_dac.BASE_SCHEMA)
-    .extend(cv.polling_component_schema("1s")),
+    # .extend(cv.polling_component_schema("1s")),
     # validate_config,
     # cv.only_with_esp_idf,
     # cv.only_on_esp32,
