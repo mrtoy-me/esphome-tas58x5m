@@ -65,9 +65,9 @@ CONFIG_SCHEMA = (
     )
     .extend(tas58x5m_dac.BASE_SCHEMA)
     .extend(cv.polling_component_schema("1s")),
-    validate_config,
-    cv.only_with_esp_idf,
-    cv.only_on_esp32,
+    # validate_config,
+    # cv.only_with_esp_idf,
+    # cv.only_on_esp32,
 )
 
 async def to_code(config):
