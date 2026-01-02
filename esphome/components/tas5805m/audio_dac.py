@@ -1,5 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
+import esphome.final_validate as fv
 from esphome.components import tas58x5m_dac
 from esphome.components.audio_dac import AudioDac
 from esphome import pins
@@ -15,6 +16,12 @@ from esphome.const import (
 
 CODEOWNERS = ["@mrtoy-me"]
 DEPENDENCIES = ["i2c"]
+
+CONF_AUDIO_DAC = "audio_dac"
+
+CONF_ANALOG_GAIN = "analog_gain"
+CONF_DAC_MODE = "dac_mode"
+CONF_MIXER_MODE = "mixer_mode"
 
 CONF_IGNORE_FAULT = "ignore_fault"
 CONF_REFRESH_EQ = "refresh_eq"
@@ -40,9 +47,18 @@ EXCLUDE_IGNORE_MODES = {
 def validate_config(config):
     if (config[CONF_VOLUME_MAX] - config[CONF_VOLUME_MIN]) < 9:
         raise cv.Invalid("volume_max must at least 9db greater than volume_min")
-    if config[CONF_DAC_MODE] == "PBTL" and (config[CONF_MIXER_MODE] == "STEREO" or config[CONF_MIXER_MODE] == "STEREO_INVERSE"):
-        raise cv.Invalid("dac_mode: PBTL must have mixer_mode: MONO or RIGHT or LEFT")
+
     return config
+
+def _final_validation(config):
+    if CONF_AUDIO_DAC not in config:
+        return
+    full_config = fv.full_config.get()
+    audio_dac_conf = full_config[CONF_AUDIO_DAC]
+    if audio_dac_conf[CONF_DAC_MODE] == "PBTL" and (audio_dac_conf[CONF_MIXER_MODE] == "STEREO" or audio_dac_conf[CONF_MIXER_MODE] == "STEREO_INVERSE"):
+        raise cv.Invalid("dac_mode: PBTL must have mixer_mode: MONO or RIGHT or LEFT")
+
+FINAL_VALIDATE_SCHEMA = _final_validate
 
 CONFIG_SCHEMA = cv.All(
     tas58x5m_dac.BASE_SCHEMA.extend(
