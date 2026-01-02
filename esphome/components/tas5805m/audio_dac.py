@@ -64,8 +64,6 @@ CONFIG_SCHEMA = cv.All(
         }
     )
     validate_config,
-    cv.only_with_esp_idf,
-    cv.only_on_esp32,
 )
 
 async def to_code(config):
