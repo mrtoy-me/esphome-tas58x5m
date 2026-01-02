@@ -57,7 +57,7 @@ bool Tas5805mComponent::configure_registers_() {
         delay(TAS5805M_REGISTERS[i].value);
         break;
       default:
-        if (!this->tas5805m_write_byte_(TAS5805M_REGISTERS[i].offset, TAS5805M_REGISTERS[i].value)) return false;
+        if (!this->tas58_write_byte_(TAS5805M_REGISTERS[i].offset, TAS5805M_REGISTERS[i].value)) return false;
         counter++;
         break;
     }
