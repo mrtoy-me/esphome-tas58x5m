@@ -6,6 +6,8 @@
 namespace esphome::tas58x5m_dac {
 
 static const char *const TAG = "tas58x5m_dac";
+static const char *const ERROR             = "Error ";
+static const char *const MIXER_MODE        = "Mixer Mode";
 
 bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
   uint8_t current;
@@ -228,15 +230,15 @@ bool Tas58Component::clear_fault_registers_() {
 // low level functions
 
 bool Tas58Component::set_book_and_page_(uint8_t book, uint8_t page) {
-  if (!this->tas58_write_byte_(TAS5805M_REG_PAGE_SET, TAS5805M_REG_PAGE_ZERO)) {
+  if (!this->tas58_write_byte_(TAS58_REG_PAGE_SET, TAS5805M_REG_PAGE_ZERO)) {
     ESP_LOGE(TAG, "%s page 0", ERROR);
     return false;
   }
-  if (!this->tas58_write_byte_(TAS5805M_REG_BOOK_SET, book)) {
+  if (!this->tas58_write_byte_(TAS58_REG_BOOK_SET, book)) {
     ESP_LOGE(TAG, "%s book 0x%02X", ERROR, book);
     return false;
   }
-  if (!this->tas58_write_byte_(TAS5805M_REG_PAGE_SET, page)) {
+  if (!this->tas58_write_byte_(TAS58_REG_PAGE_SET, page)) {
     ESP_LOGE(TAG, "%s page 0x%02X", ERROR, page);
     return false;
   }

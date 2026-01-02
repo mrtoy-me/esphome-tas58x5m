@@ -163,7 +163,7 @@ void Tas5805mComponent::update() {
     if(!this->update_delay_finished_) return;
 
     // finished delay so clear faults
-    if (!this->tas5805m_write_byte_(TAS5805M_FAULT_CLEAR, TAS5805M_ANALOG_FAULT_CLEAR)) {
+    if (!this->tas5_write_byte_(TAS5805M_FAULT_CLEAR, TAS5805M_ANALOG_FAULT_CLEAR)) {
       ESP_LOGW(TAG, "%sinitialising faults", ERROR);
     }
 
@@ -400,7 +400,7 @@ bool Tas5805mComponent::set_eq_gain(uint8_t band, int8_t gain) {
 
 bool Tas5805mComponent::set_mute_off() {
   if (!this->is_muted_) return true;
-  if (!this->tas58_write_byte_(TAS58_DEVICE_CTRL_2, this->tas58_control_state_)) return false;
+  if (!this->tas58_write_byte_(tas58x5m_dac::TAS58_DEVICE_CTRL_2, this->tas58_control_state_)) return false;
   this->is_muted_ = false;
   ESP_LOGD(TAG, "Mute Off");
   return true;
@@ -410,7 +410,7 @@ bool Tas5805mComponent::set_mute_off() {
 // ensures get_state = get_power_state
 bool Tas5805mComponent::set_mute_on() {
   if (this->is_muted_) return true;
-  if (!this->tas58_write_byte_(TAS58_DEVICE_CTRL_2, this->tas580_control_state_ + TAS58_MUTE_MASK)) return false;
+  if (!this->tas58_write_byte_(tas58x5m_dac::TAS58_DEVICE_CTRL_2, this->tas58_control_state_ + tas58x5m_dac::TAS58_MUTE_MASK)) return false;
   this->is_muted_ = true;
   ESP_LOGD(TAG, "Mute On");
   return true;
