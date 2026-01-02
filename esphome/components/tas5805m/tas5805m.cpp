@@ -75,7 +75,7 @@ bool Tas5805mComponent::configure_registers_() {
 
   if (!this->set_analog_gain_(this->tas58_analog_gain_)) return false;
 
-  if (!this->set_state_(CTRL_PLAY)) return false;
+  if (!this->set_state_(tas58x5m_dac::CTRL_PLAY)) return false;
 
   #ifdef USE_TAS5805M_EQ
     #ifdef USE_SPEAKER
@@ -298,7 +298,7 @@ void Tas5805mComponent::dump_config() {
               "  Refresh EQ: %s\n",
               this->number_registers_configured_, this->tas58_analog_gain_,
               this->tas58_dac_mode_ ? "PBTL" : "BTL",
-              MIXER_MODE_TEXT[this->tas58_mixer_mode_],
+              tas58x5m_dac::MIXER_MODE_TEXT[this->tas58_mixer_mode_],
               this->tas5805m_volume_max_, this->tas5805m_volume_min_,
               this->ignore_clock_faults_when_clearing_faults_ ? "CLOCK FAULTS" : "NONE",
               this->auto_refresh_ ? "BY SWITCH" : "BY GAIN"
