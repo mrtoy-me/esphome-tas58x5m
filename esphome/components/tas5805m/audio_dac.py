@@ -63,7 +63,7 @@ CONFIG_SCHEMA = cv.All(
             ),
         }
     )
-    validate_config,
+    .add_extra(validate_config),
     # cv.only_with_esp_idf,
     # cv.only_on_esp32,
 )
