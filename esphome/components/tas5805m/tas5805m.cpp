@@ -41,26 +41,6 @@ void Tas5805mComponent::setup() {
   this->tas5805m_raw_volume_max_ = (uint8_t)((this->tas5805m_volume_max_ - 24) * -2);
   this->tas5805m_raw_volume_min_ = (uint8_t)((this->tas5805m_volume_min_ - 24) * -2);
 
-   // enable Tas5805m
-  if(!this->set_deep_sleep_off_()) return false;
-
-  // only setup once here
-  if (!this->set_dac_mode_(this->tas58_dac_mode_)) return false;
-
-  // note: setup of mixer mode deferred to 'loop' once 'refresh_settings' runs
-
-  if (!this->set_analog_gain_(this->tas58_analog_gain_)) return false;
-
-  if (!this->set_state_(CTRL_PLAY)) return false;
-
-  #ifdef USE_TAS5805M_EQ
-    #ifdef USE_SPEAKER
-    if (!this->enable_eq(true)) return false;
-    #else
-    if (!this->enable_eq(false)) return false;
-    #endif
-  #endif
-
   // initialise to now
   this->start_time_ = millis();
 }
@@ -84,6 +64,27 @@ bool Tas5805mComponent::configure_registers_() {
     i++;
   }
   this->number_registers_configured_ = counter;
+
+   // enable Tas5805m
+  if(!this->set_deep_sleep_off_()) return false;
+
+  // only setup once here
+  if (!this->set_dac_mode_(this->tas58_dac_mode_)) return false;
+
+  // note: setup of mixer mode deferred to 'loop' once 'refresh_settings' runs
+
+  if (!this->set_analog_gain_(this->tas58_analog_gain_)) return false;
+
+  if (!this->set_state_(CTRL_PLAY)) return false;
+
+  #ifdef USE_TAS5805M_EQ
+    #ifdef USE_SPEAKER
+    if (!this->enable_eq(true)) return false;
+    #else
+    if (!this->enable_eq(false)) return false;
+    #endif
+  #endif
+
   return true;
 }
 
