@@ -28,7 +28,7 @@ enum ExcludeIgnoreMode : uint8_t {
     CLOCK_FAULT = 1,
 };
 
-class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, public tas58_common::Tas58Component {
+class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, public tas58x5m_dac::Tas58Component {
  public:
   void setup() override;
 
