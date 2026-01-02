@@ -1,8 +1,6 @@
 #pragma once
 
 #include "esphome/components/audio_dac/audio_dac.h"
-#include "esphome/core/component.h"
-#include "esphome/components/i2c/i2c.h"
 #include "esphome/core/hal.h"
 
 #include "esphome/components/tas58x5m_dac/tas58.h"
