@@ -5,6 +5,8 @@
 
 namespace esphome::tas58x5m_dac {
 
+static const char *const TAG = "tas58x5m_dac";
+
 bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
   uint8_t current;
   if (!this->tas58_read_byte_(TAS58_AGAIN, &current)) return false;
@@ -68,13 +70,13 @@ bool Tas58Component::set_dac_mode_(DacMode mode) {
 }
 
 bool Tas58Component::tas58_is_muted_(){
-  uint8_t value;
-  if(!this->tas58_read_byte_(TAS58_DEVICE_CTRL_2, &value)) return false;
+  uint8_t current;
+  if(!this->tas58_read_byte_(TAS58_DEVICE_CTRL_2, &current)) return false;
   return (current && TAS58_MUTE_MASK);
 }
 
 bool Tas58Component::set_deep_sleep_off_() {
-  if (this->tas5805m_control_state_ != CTRL_DEEP_SLEEP) return true; // already not in deep sleep
+  if (this->tas58_control_state_ != CTRL_DEEP_SLEEP) return true; // already not in deep sleep
   // preserve mute state
   uint8_t new_value = this->tas58_is_muted_() ? (CTRL_PLAY + TAS58_MUTE_MASK) : CTRL_PLAY;
   if (!this->tas58_write_byte_(TAS58_DEVICE_CTRL_2, new_value)) return false;
@@ -85,7 +87,7 @@ bool Tas58Component::set_deep_sleep_off_() {
 }
 
 bool Tas58Component::set_deep_sleep_on_() {
-  if (this->tas5805m_control_state_ == CTRL_DEEP_SLEEP) return true; // already in deep sleep
+  if (this->tas58_control_state_ == CTRL_DEEP_SLEEP) return true; // already in deep sleep
 
   // preserve mute state
   uint8_t new_value = this->tas58_is_muted_() ? (CTRL_DEEP_SLEEP + TAS58_MUTE_MASK) : CTRL_DEEP_SLEEP;
