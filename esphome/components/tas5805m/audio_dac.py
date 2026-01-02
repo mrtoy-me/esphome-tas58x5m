@@ -58,7 +58,7 @@ def _final_validation(config):
     if audio_dac_conf[CONF_DAC_MODE] == "PBTL" and (audio_dac_conf[CONF_MIXER_MODE] == "STEREO" or audio_dac_conf[CONF_MIXER_MODE] == "STEREO_INVERSE"):
         raise cv.Invalid("dac_mode: PBTL must have mixer_mode: MONO or RIGHT or LEFT")
 
-FINAL_VALIDATE_SCHEMA = _final_validate
+FINAL_VALIDATE_SCHEMA = _final_validation
 
 CONFIG_SCHEMA = cv.All(
     tas58x5m_dac.BASE_SCHEMA.extend(
