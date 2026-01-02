@@ -40,6 +40,8 @@ EXCLUDE_IGNORE_MODES = {
 def validate_config(config):
     if (config[CONF_VOLUME_MAX] - config[CONF_VOLUME_MIN]) < 9:
         raise cv.Invalid("volume_max must at least 9db greater than volume_min")
+    if config[CONF_DAC_MODE] == "PBTL" and (config[CONF_MIXER_MODE] == "STEREO" or config[CONF_MIXER_MODE] == "STEREO_INVERSE"):
+        raise cv.Invalid("dac_mode: PBTL must have mixer_mode: MONO or RIGHT or LEFT")
     return config
 
 CONFIG_SCHEMA = cv.All(

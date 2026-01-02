@@ -51,7 +51,7 @@ BASE_SCHEMA = (
   )
   .extend(cv.polling_component_schema("10s"))
   .extend(i2c.i2c_device_schema(0x2D))
-  validate_config
+  #validate_config
 )
 
 async def tas58x5m_dac_to_code(var, config):
