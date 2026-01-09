@@ -98,6 +98,7 @@ void Tas5805mComponent::loop() {
   // settings are only refreshed once
   // disable 'loop' once all eq gains have been written
   if (this->refresh_settings_complete_) {
+    ESP_LOGW(TAG, "disabling loop");
     this->disable_loop(); // requires Esphome 2025.7.0
     return;
   }
@@ -175,6 +176,8 @@ void Tas5805mComponent::update() {
     // read and process faults from next update
     return;
   }
+
+  ESP_LOGW(TAG, "running update");
 
   // if there was a fault last update then clear any faults
   if (this->have_fault_to_clear_) {
