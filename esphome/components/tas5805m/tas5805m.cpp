@@ -32,7 +32,7 @@ void Tas5805mComponent::setup() {
   //   delay(10);
   //   this->enable_pin_->digital_write(true);
   // }
-  ESP_LOGW(TAG, "Config registers");
+  ESP_LOGW(TAG, "Tas5805m Config registers");
   if (!this->configure_registers_()) {
     this->error_code_ = CONFIGURATION_FAILED;
     this->mark_failed();
