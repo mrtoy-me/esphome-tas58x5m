@@ -496,7 +496,7 @@ bool Tas5805mComponent::set_eq_off_() {
 bool Tas5805mComponent::set_eq_on_() {
   #ifdef USE_TAS5805M_EQ
   if (this->tas5805m_eq_enabled_) return true;
-  if (!this->tas58_write_byte_(Ttas58x5m_dac::TAS58_DSP_MISC, TAS5805M_CTRL_EQ_ON)) return false;
+  if (!this->tas58_write_byte_(tas58x5m_dac::TAS58_DSP_MISC, TAS5805M_CTRL_EQ_ON)) return false;
   this->tas5805m_eq_enabled_ = true;
   ESP_LOGD(TAG, "EQ control On");
   #endif
