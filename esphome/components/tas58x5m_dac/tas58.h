@@ -2,6 +2,7 @@
 
 #include "esphome/core/component.h"
 #include "esphome/components/i2c/i2c.h"
+#include "esphome/core/hal.h"
 
 namespace esphome::tas58x5m_dac {
 
@@ -71,6 +72,9 @@ class Tas58Component : public PollingComponent, public i2c::I2CDevice {
  public:
    Tas58Component() = default;
 
+   void setup() override;
+
+   void set_enable_pin(GPIOPin *enable) { this->enable_pin_ = enable; }
    void config_analog_gain(float analog_gain) { this->tas58_analog_gain_ = analog_gain; }
    void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
    void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }
@@ -106,6 +110,9 @@ class Tas58Component : public PollingComponent, public i2c::I2CDevice {
    bool tas58_read_bytes_(uint8_t a_register, uint8_t* data, uint8_t number_bytes);
    bool tas58_write_byte_(uint8_t a_register, uint8_t data);
    bool tas58_write_bytes_(uint8_t a_register, uint8_t *data, uint8_t len);
+
+
+   GPIOPin* enable_pin_{nullptr};
 
    float tas58_analog_gain_{0};
 

@@ -25,13 +25,13 @@ static const uint16_t INITIAL_UPDATE_DELAY = 4000;
 
 void Tas5805mComponent::setup() {
   ESP_LOGW(TAG, "Running Tas5805m setup");
-  if (this->enable_pin_ != nullptr) {
-    ESP_LOGW(TAG, "Setup enable pin");
-    this->enable_pin_->setup();
-    this->enable_pin_->digital_write(false);
-    delay(10);
-    this->enable_pin_->digital_write(true);
-  }
+  // if (this->enable_pin_ != nullptr) {
+  //   ESP_LOGW(TAG, "Setup enable pin");
+  //   this->enable_pin_->setup();
+  //   this->enable_pin_->digital_write(false);
+  //   delay(10);
+  //   this->enable_pin_->digital_write(true);
+  // }
   ESP_LOGW(TAG, "Config registers");
   if (!this->configure_registers_()) {
     this->error_code_ = CONFIGURATION_FAILED;

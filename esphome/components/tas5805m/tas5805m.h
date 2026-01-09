@@ -37,7 +37,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public tas58x5m_dac::Tas58
 
   float get_setup_priority() const override { return setup_priority::IO; }
 
-  void set_enable_pin(GPIOPin *enable) { this->enable_pin_ = enable; }
+  // void set_enable_pin(GPIOPin *enable) { this->enable_pin_ = enable; }
 
   // optional YAML config
 
@@ -94,7 +94,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public tas58x5m_dac::Tas58
   bool set_volume(float value) override;
 
  protected:
-   GPIOPin* enable_pin_{nullptr};
+  //  GPIOPin* enable_pin_{nullptr};
 
    bool configure_registers_();
 

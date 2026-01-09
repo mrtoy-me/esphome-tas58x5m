@@ -9,6 +9,18 @@ static const char *const TAG = "tas58x5m_dac";
 static const char *const ERROR             = "Error ";
 static const char *const MIXER_MODE        = "Mixer Mode";
 
+
+void Tas58Component::setup() {
+ ESP_LOGW(TAG, "Running Tas58 setup");
+  if (this->enable_pin_ != nullptr) {
+    ESP_LOGW(TAG, "Setup enable pin");
+    this->enable_pin_->setup();
+    this->enable_pin_->digital_write(false);
+    delay(10);
+    this->enable_pin_->digital_write(true);
+  }
+}
+
 bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
   uint8_t current;
   if (!this->tas58_read_byte_(TAS58_AGAIN, &current)) return false;
