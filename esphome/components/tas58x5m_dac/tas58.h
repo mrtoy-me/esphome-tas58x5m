@@ -70,7 +70,7 @@ static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain t
 
 class Tas58Component : public PollingComponent, public i2c::I2CDevice {
  public:
-   Tas58Component() = default;
+  //  Tas58Component() = default;
 
    void setup() override;
 
@@ -79,7 +79,7 @@ class Tas58Component : public PollingComponent, public i2c::I2CDevice {
    void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
    void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }
 
-   float get_setup_priority() const override { return setup_priority::IO + 10; }
+   float get_setup_priority() const override { return setup_priority::IO}
 
    bool get_analog_gain_(uint8_t* raw_gain);
    bool set_analog_gain_(float gain_db);
