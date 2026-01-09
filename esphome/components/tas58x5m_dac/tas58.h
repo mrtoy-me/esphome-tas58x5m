@@ -69,6 +69,8 @@ static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain t
 
 class Tas58Component : public PollingComponent, public i2c::I2CDevice {
  public:
+   Tas58Component() = default;
+
    void config_analog_gain(float analog_gain) { this->tas58_analog_gain_ = analog_gain; }
    void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
    void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }

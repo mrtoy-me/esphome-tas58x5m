@@ -4,6 +4,8 @@ import esphome.config_validation as cv
 
 CODEOWNERS = ["@mrtoy"]
 
+DEPENDENCIES = ["i2c"]
+
 CONF_ANALOG_GAIN = "analog_gain"
 CONF_DAC_MODE = "dac_mode"
 CONF_MIXER_MODE = "mixer_mode"
