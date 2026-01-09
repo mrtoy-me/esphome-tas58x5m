@@ -24,14 +24,15 @@ static const uint8_t DELAY_LOOPS           = 20;    // 20 loop iterations ~ 320m
 static const uint16_t INITIAL_UPDATE_DELAY = 4000;
 
 void Tas5805mComponent::setup() {
-  ESP_LOGCONFIG(TAG, "Running setup");
+  ESP_LOGCONFIG(TAG, "Running Tas5805m setup");
   if (this->enable_pin_ != nullptr) {
+    ESP_LOGCONFIG(TAG, "Setup enable pin");
     this->enable_pin_->setup();
     this->enable_pin_->digital_write(false);
     delay(10);
     this->enable_pin_->digital_write(true);
   }
-
+  ESP_LOGCONFIG(TAG, "Config registers");
   if (!this->configure_registers_()) {
     this->error_code_ = CONFIGURATION_FAILED;
     this->mark_failed();
@@ -176,8 +177,6 @@ void Tas5805mComponent::update() {
     // read and process faults from next update
     return;
   }
-
-  ESP_LOGW(TAG, "running update");
 
   // if there was a fault last update then clear any faults
   if (this->have_fault_to_clear_) {
