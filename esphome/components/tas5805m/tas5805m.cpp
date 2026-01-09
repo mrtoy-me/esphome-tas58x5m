@@ -24,6 +24,7 @@ static const uint8_t DELAY_LOOPS           = 20;    // 20 loop iterations ~ 320m
 static const uint16_t INITIAL_UPDATE_DELAY = 4000;
 
 void Tas5805mComponent::setup() {
+  this->parent_->setup();
   ESP_LOGW(TAG, "Running Tas5805m setup");
   // if (this->enable_pin_ != nullptr) {
   //   ESP_LOGW(TAG, "Setup enable pin");
