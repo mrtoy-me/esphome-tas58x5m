@@ -1,9 +1,9 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-import esphome.final_validate as fv
+# import esphome.final_validate as fv
 from esphome.components import tas58x5m_dac
 from esphome.components.audio_dac import AudioDac
-#from esphome import pins
+from esphome import pins
 
 DEPENDENCIES = tas58x5m_dac.DEPENDENCIES
 
@@ -11,7 +11,7 @@ AUTO_LOAD = ["tas58x5m_dac"]
 
 from esphome.const import (
      CONF_ID,
-#     CONF_ENABLE_PIN,
+     CONF_ENABLE_PIN,
 )
 
 CODEOWNERS = ["@mrtoy-me"]
@@ -66,7 +66,7 @@ CONFIG_SCHEMA = cv.All(
     tas58x5m_dac.BASE_SCHEMA.extend(
         {
             cv.GenerateID(): cv.declare_id(Tas5805mComponent),
-            # cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
+            cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
 
             cv.Optional(CONF_IGNORE_FAULT, default="CLOCK_FAULT"): cv.enum(
                         EXCLUDE_IGNORE_MODES, upper=True
@@ -92,8 +92,8 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await tas58x5m_dac.tas58x5m_dac_to_code(var, config)
 
-    # enable = await cg.gpio_pin_expression(config[CONF_ENABLE_PIN])
-    # cg.add(var.set_enable_pin(enable))
+    enable = await cg.gpio_pin_expression(config[CONF_ENABLE_PIN])
+    cg.add(var.set_enable_pin(enable))
     cg.add(var.config_ignore_fault_mode(config[CONF_IGNORE_FAULT]))
     cg.add(var.config_refresh_eq(config[CONF_REFRESH_EQ]))
     cg.add(var.config_volume_max(config[CONF_VOLUME_MAX]))

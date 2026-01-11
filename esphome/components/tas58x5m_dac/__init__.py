@@ -1,11 +1,11 @@
 import esphome.codegen as cg
 from esphome.components import i2c
 import esphome.config_validation as cv
-from esphome import pins
+# from esphome import pins
 
-from esphome.const import (
-    CONF_ENABLE_PIN,
-)
+# from esphome.const import (
+#     CONF_ENABLE_PIN,
+# )
 
 CODEOWNERS = ["@mrtoy"]
 
@@ -45,7 +45,7 @@ def validate_config(config):
 BASE_SCHEMA = (
     cv.Schema(
         {
-            cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
+            # cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_ANALOG_GAIN, default="-15.5dB"): cv.All(
                         cv.decibel, cv.one_of(*ANALOG_GAINS)
             ),
@@ -59,15 +59,15 @@ BASE_SCHEMA = (
   )
   .extend(cv.polling_component_schema("10s"))
   .extend(i2c.i2c_device_schema(0x2D))
-  #validate_config
+  .add_extra(validate_config),
 )
 
 async def tas58x5m_dac_to_code(var, config):
     await cg.register_component(var, config)
 
     await i2c.register_i2c_device(var, config)
-    enable = await cg.gpio_pin_expression(config[CONF_ENABLE_PIN])
-    cg.add(var.set_enable_pin(enable))
+    # enable = await cg.gpio_pin_expression(config[CONF_ENABLE_PIN])
+    # cg.add(var.set_enable_pin(enable))
     cg.add(var.config_analog_gain(config[CONF_ANALOG_GAIN]))
     cg.add(var.config_dac_mode(config[CONF_DAC_MODE]))
     cg.add(var.config_mixer_mode(config[CONF_MIXER_MODE]))

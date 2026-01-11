@@ -70,16 +70,16 @@ static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain t
 
 class Tas58Component : public PollingComponent, public i2c::I2CDevice {
  public:
-  //  Tas58Component() = default;
+   Tas58Component() = default;
 
-   void setup() override;
+  //  void setup() override;
 
-   void set_enable_pin(GPIOPin *enable) { this->enable_pin_ = enable; }
+  //  void set_enable_pin(GPIOPin *enable) { this->enable_pin_ = enable; }
    void config_analog_gain(float analog_gain) { this->tas58_analog_gain_ = analog_gain; }
    void config_dac_mode(DacMode dac_mode) {this->tas58_dac_mode_ = dac_mode; }
    void config_mixer_mode(MixerMode mixer_mode) {this->tas58_mixer_mode_ = mixer_mode; }
 
-   float get_setup_priority() const override { return (setup_priority::IO + 10.0); }
+   float get_setup_priority() const override { return setup_priority::IO; }
 
    bool get_analog_gain_(uint8_t* raw_gain);
    bool set_analog_gain_(float gain_db);
@@ -112,7 +112,7 @@ class Tas58Component : public PollingComponent, public i2c::I2CDevice {
    bool tas58_write_bytes_(uint8_t a_register, uint8_t *data, uint8_t len);
 
 
-   GPIOPin* enable_pin_{nullptr};
+  //  GPIOPin* enable_pin_{nullptr};
 
    float tas58_analog_gain_{0};
 
