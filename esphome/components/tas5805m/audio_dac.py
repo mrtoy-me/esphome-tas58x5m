@@ -82,8 +82,8 @@ CONFIG_SCHEMA = cv.All(
                         cv.decibel, cv.int_range(-103, 24)
             ),
         }
-    )
-    # .add_extra(validate_config),
+    ),
+    validate_config,
     cv.only_with_esp_idf,
     cv.only_on_esp32,
 )
