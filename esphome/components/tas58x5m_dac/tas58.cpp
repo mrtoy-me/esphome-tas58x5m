@@ -21,7 +21,7 @@ static const char *const MIXER_MODE        = "Mixer Mode";
 //   }
 // }
 
-bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
+bool Tas58x5mDac::get_analog_gain_(uint8_t* raw_gain) {
   uint8_t current;
   if (!this->tas58_read_byte_(TAS58_AGAIN, &current)) return false;
   // remove top 3 reserved bits
@@ -35,7 +35,7 @@ bool Tas58Component::get_analog_gain_(uint8_t* raw_gain) {
 // 00001: -0.5db
 // 11111: -15.5 dB
 // set analog gain in dB
-bool Tas58Component::set_analog_gain_(float gain_db) {
+bool Tas58x5mDac::set_analog_gain_(float gain_db) {
   if ((gain_db < TAS58_MIN_ANALOG_GAIN) || (gain_db > TAS58_MAX_ANALOG_GAIN)) return false;
 
   uint8_t new_again = static_cast<uint8_t>(-gain_db * 2.0);
@@ -51,7 +51,7 @@ bool Tas58Component::set_analog_gain_(float gain_db) {
   return true;
 }
 
-bool Tas58Component::get_dac_mode_(DacMode* mode) {
+bool Tas58x5mDac::get_dac_mode_(DacMode* mode) {
     uint8_t current_value;
     if (!this->tas58_read_byte_(TAS58_DEVICE_CTRL_1, &current_value)) return false;
     if (current_value & (1 << 2)) {
@@ -64,7 +64,7 @@ bool Tas58Component::get_dac_mode_(DacMode* mode) {
 }
 
 // only runs once from 'setup'
-bool Tas58Component::set_dac_mode_(DacMode mode) {
+bool Tas58x5mDac::set_dac_mode_(DacMode mode) {
   uint8_t current_value;
   if (!this->tas58_read_byte_(TAS58_DEVICE_CTRL_1, &current_value)) return false;
 
@@ -83,13 +83,13 @@ bool Tas58Component::set_dac_mode_(DacMode mode) {
   return true;
 }
 
-bool Tas58Component::tas58_is_muted_(){
+bool Tas58x5mDac::tas58_is_muted_(){
   uint8_t current;
   if(!this->tas58_read_byte_(TAS58_DEVICE_CTRL_2, &current)) return false;
   return (current && TAS58_MUTE_MASK);
 }
 
-bool Tas58Component::set_deep_sleep_off_() {
+bool Tas58x5mDac::set_deep_sleep_off_() {
   if (this->tas58_control_state_ != CTRL_DEEP_SLEEP) return true; // already not in deep sleep
   // preserve mute state
   uint8_t new_value = this->tas58_is_muted_() ? (CTRL_PLAY + TAS58_MUTE_MASK) : CTRL_PLAY;
@@ -100,7 +100,7 @@ bool Tas58Component::set_deep_sleep_off_() {
   return true;
 }
 
-bool Tas58Component::set_deep_sleep_on_() {
+bool Tas58x5mDac::set_deep_sleep_on_() {
   if (this->tas58_control_state_ == CTRL_DEEP_SLEEP) return true; // already in deep sleep
 
   // preserve mute state
@@ -112,7 +112,7 @@ bool Tas58Component::set_deep_sleep_on_() {
   return true;
 }
 
-bool Tas58Component::get_digital_volume_(uint8_t* raw_volume) {
+bool Tas58x5mDac::get_digital_volume_(uint8_t* raw_volume) {
   uint8_t current = 254; // lowest raw volume
   if(!this->tas58_read_byte_(TAS58_DIG_VOL_CTRL, &current)) return false;
   *raw_volume = current;
@@ -128,18 +128,18 @@ bool Tas58Component::get_digital_volume_(uint8_t* raw_volume) {
 // 00110001: -0.5 dB
 // 11111110: -103 dB
 // 11111111: Mute
-bool Tas58Component::set_digital_volume_(uint8_t raw_volume) {
+bool Tas58x5mDac::set_digital_volume_(uint8_t raw_volume) {
   if (!this->tas58_write_byte_(TAS58_DIG_VOL_CTRL, raw_volume)) return false;
   return true;
 }
 
-bool  Tas58Component::get_mixer_mode_(MixerMode *mode) {
+bool  Tas58x5mDac::get_mixer_mode_(MixerMode *mode) {
   *mode = this->tas58_mixer_mode_;
   return true;
 }
 
 
-bool  Tas58Component::set_mixer_mode_(MixerMode mode) {
+bool  Tas58x5mDac::set_mixer_mode_(MixerMode mode) {
   uint32_t mixer_l_to_l, mixer_r_to_r, mixer_l_to_r, mixer_r_to_l;
 
   switch (mode) {
@@ -220,19 +220,19 @@ bool  Tas58Component::set_mixer_mode_(MixerMode mode) {
   return true;
 }
 
-bool Tas58Component::get_state_(ControlState* state) {
+bool Tas58x5mDac::get_state_(ControlState* state) {
   *state = this->tas58_control_state_;
   return true;
 }
 
-bool Tas58Component::set_state_(ControlState state) {
+bool Tas58x5mDac::set_state_(ControlState state) {
   if (this->tas58_control_state_ == state) return true;
   if (!this->tas58_write_byte_(TAS58_DEVICE_CTRL_2, state)) return false;
   this->tas58_control_state_ = state;
   return true;
 }
 
-bool Tas58Component::clear_fault_registers_() {
+bool Tas58x5mDac::clear_fault_registers_() {
   if (!this->tas58_write_byte_(TAS58_FAULT_CLEAR, ANALOG_FAULT_CLEAR_COMMAND)) return false;
   ESP_LOGD(TAG, "Faults cleared");
   return true;
@@ -241,7 +241,7 @@ bool Tas58Component::clear_fault_registers_() {
 
 // low level functions
 
-bool Tas58Component::set_book_and_page_(uint8_t book, uint8_t page) {
+bool Tas58x5mDac::set_book_and_page_(uint8_t book, uint8_t page) {
   if (!this->tas58_write_byte_(TAS58_REG_PAGE_SET, TAS58_REG_PAGE_ZERO)) {
     ESP_LOGE(TAG, "%s page 0", ERROR);
     return false;
@@ -257,11 +257,11 @@ bool Tas58Component::set_book_and_page_(uint8_t book, uint8_t page) {
   return true;
 }
 
-bool Tas58Component::tas58_read_byte_(uint8_t a_register, uint8_t* data) {
+bool Tas58x5mDac::tas58_read_byte_(uint8_t a_register, uint8_t* data) {
   return this->tas58_read_bytes_(a_register, data, 1);
 }
 
-bool Tas58Component::tas58_read_bytes_(uint8_t a_register, uint8_t* data, uint8_t number_bytes) {
+bool Tas58x5mDac::tas58_read_bytes_(uint8_t a_register, uint8_t* data, uint8_t number_bytes) {
   i2c::ErrorCode error_code;
   error_code = this->write(&a_register, 1);
   if (error_code != i2c::ERROR_OK) {
@@ -278,11 +278,11 @@ bool Tas58Component::tas58_read_bytes_(uint8_t a_register, uint8_t* data, uint8_
   return true;
 }
 
-bool Tas58Component::tas58_write_byte_(uint8_t a_register, uint8_t data) {
+bool Tas58x5mDac::tas58_write_byte_(uint8_t a_register, uint8_t data) {
   return this->tas58_write_bytes_(a_register, &data, 1);
 }
 
-bool Tas58Component::tas58_write_bytes_(uint8_t a_register, uint8_t* data, uint8_t len) {
+bool Tas58x5mDac::tas58_write_bytes_(uint8_t a_register, uint8_t* data, uint8_t len) {
   i2c::ErrorCode error_code = this->write_register(a_register, data, len);
   if (error_code != i2c::ERROR_OK) {
     ESP_LOGE(TAG, "Write error: %i", error_code);

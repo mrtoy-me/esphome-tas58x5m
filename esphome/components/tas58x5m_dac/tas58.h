@@ -68,9 +68,9 @@ static const uint32_t TAS58_MIXER_VALUE_MINUS6DB    = 0x00004000;
 static const uint8_t TAS58_MUTE_MASK                = 0x08;  // LR Channel Mute
 static const uint8_t TAS58_AGAIN_MASK               = 0xE0;  // mask to retain top 3 reserved bits of AGAIN register
 
-class Tas58Component : public PollingComponent, public i2c::I2CDevice {
+class Tas58x5mDac : public PollingComponent, public i2c::I2CDevice {
  public:
-   Tas58Component() = default;
+   //Tas58Component() = default;
 
   //  void setup() override;
 

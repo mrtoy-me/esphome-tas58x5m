@@ -17,7 +17,7 @@ CONF_MIXER_MODE = "mixer_mode"
 
 tas58x5m_dac_ns = cg.esphome_ns.namespace("tas58x5m_dac")
 
-Tas58Component = tas58x5m_dac_ns.class_("Tas58Component", cg.PollingComponent, i2c.I2CDevice)
+Tas58x5mDac = tas58x5m_dac_ns.class_("Tas58x5mDac", cg.PollingComponent, i2c.I2CDevice)
 
 DacMode = tas58x5m_dac_ns.enum("DacMode")
 DAC_MODES = {
